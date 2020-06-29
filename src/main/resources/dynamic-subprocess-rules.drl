@@ -1,0 +1,14 @@
+import org.acme.model.Product;
+import org.acme.model.ProcessExchangeModel;
+
+dialect "mvel"
+
+rule "Product X subprocess"
+no-loop true
+when 
+    $product: Product(name="Product X")
+    $processExchange: ProcessExchangeModel()
+then
+    $processExchange.setSubprocess("child-a");
+    $processExchange.setMessage("Received a product with price $" + $product.getPrice());
+end
