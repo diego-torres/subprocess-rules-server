@@ -12,3 +12,13 @@ then
     $processExchange.setSubprocess("child-a");
     $processExchange.setMessage("Received a product with price $" + $product.getPrice());
 end
+
+rule "Product Y subprocess"
+no-loop true
+when 
+    $product: Product(name == "Product Y")
+    $processExchange: ProcessExchangeModel()
+then
+    $processExchange.setSubprocess("child-a");
+    $processExchange.setMessage("Received a product Y");
+end
