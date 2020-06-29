@@ -1,20 +1,13 @@
 package org.acme;
 
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
-import java.util.Map;
 
-import org.drools.core.SessionConfiguration;
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieBuilder;
 import org.kie.api.builder.KieFileSystem;
-import org.kie.api.builder.Message;
 import org.kie.api.builder.Message.Level;
 import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
-import org.kie.api.runtime.KieSessionConfiguration;
 import org.kie.internal.io.ResourceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,10 +33,13 @@ public class App {
         log.debug("Building a new kieContainer");
         KieServices kieServices = KieServices.Factory.get();
         KieFileSystem kfs = kieServices.newKieFileSystem();
-        URL oracle = new URL("https://raw.githubusercontent.com/diego-torres/dynamic-subprocess-rules-kjar/master/src/main/resources/com/myspace/dynamic_subprocess_rules_kjar/process-by-product.drl");
+        URL oracle = new URL("https://raw.githubusercontent.com/diego-torres/subprocess-rules-server/master/src/main/resources/dynamic-subprocess-rules.drl");
         URLConnection yc = oracle.openConnection();
-        kfs.write(ResourceFactory.newInputStreamResource(yc.getInputStream()));
-        kieServices.newKieBuilder(kfs).buildAll();
+        kfs.write("src/main/resources/dynamic-subprocess-rules.drl", ResourceFactory.newInputStreamResource(yc.getInputStream()));
+        KieBuilder kb = kieServices.newKieBuilder(kfs).buildAll();
+        if (kb.getResults().getMessages(Level.ERROR).size() != 0) {
+            log.error("Invalid file: {}", kb.getResults().getMessages());
+        }
         return kieServices.newKieContainer(kieServices.getRepository().getDefaultReleaseId());
     }
 

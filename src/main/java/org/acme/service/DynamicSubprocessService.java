@@ -9,12 +9,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DynamicSubprocessService {
-    private final KieContainer kieContainer;
-
     @Autowired
-    public DynamicSubprocessService(KieContainer kieContainer) {
-        this.kieContainer = kieContainer;
-    }
+    private KieContainer kieContainer;
 
     public ProcessExchangeModel getSubprocess(Product product) {
         ProcessExchangeModel pem = new ProcessExchangeModel("child-b",

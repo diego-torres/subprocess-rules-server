@@ -6,7 +6,7 @@ dialect "mvel"
 rule "Product X subprocess"
 no-loop true
 when 
-    $product: Product(name="Product X")
+    $product: Product(name == "Product X")
     $processExchange: ProcessExchangeModel()
 then
     $processExchange.setSubprocess("child-a");
