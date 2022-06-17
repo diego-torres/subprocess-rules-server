@@ -16,7 +16,7 @@
     <java.version>1.8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <kie.version>7.33.0.Final-redhat-00003</kie.version>
+    <kie.version>7.60.0.Final</kie.version>
   </properties>
 
   <dependencies>
